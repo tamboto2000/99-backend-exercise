@@ -26,11 +26,13 @@ Run this command to delpoy the whole stack:
 make deploy
 ```
 
+If you don't change the Public API Service HTTP port, you can access it from `localhost:8001`, or access it with any other port that you set. The endpoints for the public APIs are as required in the [99-backend-exercise repository](https://github.com/team99-exercise/99-backend-exercise)
+
+
 To stop you can run this command:
 ```sh
 make shutdown
 ```
 
-### You are set to go!
-If you don't change the Public API Service HTTP port, you can access it from `localhost:8001`, or access it with any other port that you set
-
+## Libraries and tools
+The modules or libraries that lives inside `pkg` is pulled out of my side project or from other technical tests that I have done, only small amount of direct third-party libraries is used for this technical test

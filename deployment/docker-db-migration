@@ -1,0 +1,15 @@
+FROM golang:1.22.3-alpine3.20
+
+WORKDIR /db-migration
+
+COPY go.mod go.sum ./
+
+RUN go mod download && go mod verify
+
+COPY . .
+
+RUN go build -v -o bin/db-migration cmd/migration/main.go
+
+EXPOSE 8000
+
+CMD ["./bin/db-migration"]

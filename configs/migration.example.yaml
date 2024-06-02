@@ -1,0 +1,10 @@
+database:
+  username: 99-user-service
+  password: '12345678'
+  host: postgre
+  port: 5432
+  
+services:    
+    user-svc:
+      database: 99-users
+      migration_file: ./scripts/migrations/user_svc_db.sql

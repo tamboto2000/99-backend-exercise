@@ -1,0 +1,57 @@
+services:
+  postgre:
+    image: postgres:16.3-alpine3.20
+    restart: always
+    container_name: postgre
+    hostname: postgre
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./_volumes/postgre/data:/var/lib/postgresql/data
+
+  db-migration:
+    build: 
+      context: ../
+      dockerfile: deployment/docker-db-migration
+    restart: always
+  
+  user-svc:
+    build: 
+      context: ../
+      dockerfile: deployment/docker-user-svc
+    restart: always
+    container_name: user-svc
+    hostname: user-svc
+    depends_on:
+      - db-migration
+    ports:
+      - ${USER_HTTP_PORT}:${USER_HTTP_PORT}
+
+  listing-svc:
+    build:
+      context: ../
+      dockerfile: deployment/docker-listing-svc
+      args:
+        - GIT_USERNAME=${LISTING_GIT_USERNAME}
+        - GIT_TOKEN=${LISTING_GIT_TOKEN}
+    restart: always
+    container_name: listing-svc
+    hostname: listing-svc    
+    ports:
+      - ${LISTING_HTTP_PORT}:${LISTING_HTTP_PORT}
+    volumes:
+      - ./_volumes/listing-svc/listings.db:/listing-svc/listings.db    
+
+  public-api-svc:
+    build:
+      context: ../
+      dockerfile: deployment/docker-public-api-svc
+    restart: always
+    container_name: public-api-svc
+    hostname: public-api-svc
+    ports:
+      - ${PUBLIC_API_PORT}:${PUBLIC_API_PORT}
+  

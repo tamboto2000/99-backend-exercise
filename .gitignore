@@ -1,0 +1,12 @@
+# binary builds
+bin/
+
+# config files 
+user_svc.yaml
+public_api_svc.yaml
+migration.yaml
+docker-compose.env
+
+# miscellaneous
+scratch/
+_volumes/

@@ -1,0 +1,15 @@
+http:
+  port: 8001
+
+services:
+  user_svc:
+    host: http://user-svc:8000
+    endpoints:
+      create_user: /users
+      get_user_detail: /users/%d
+  
+  listing_svc:
+    host: http://listing-svc:6000
+    endpoints:
+      create_listing: /listings
+      get_all_listings: /listings

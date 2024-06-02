@@ -1,0 +1,10 @@
+database:  
+  username: 99-user-service
+  password: '12345678'
+  host: postgre
+  port: 5432
+  database: 99-users
+
+http:
+  port: 8000
+

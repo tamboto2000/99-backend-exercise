@@ -1,0 +1,20 @@
+FROM python:3.11.9-slim-bookworm
+
+ARG GIT_USERNAME
+ARG GIT_TOKEN
+
+WORKDIR /listing-svc
+
+# install git
+RUN apt update
+RUN apt install -y git
+
+# clone repository
+RUN git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/team99-exercise/99-backend-exercise
+RUN cp ./99-backend-exercise/* .
+
+# run the listing service
+RUN pip install -r python-libs.txt
+RUN touch listings.db
+EXPOSE 6000
+CMD [ "python3", "listing_service.py", "--port=6000", "--debug=true" ]
